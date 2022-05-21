@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "155041576784",
+    "project_id": "clickgujrat-7634f",
+    "storage_bucket": "clickgujrat-7634f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155041576784:android:757c24e352a70e7651de55",
+        "android_client_info": {
+          "package_name": "com.example.click_gujrat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155041576784-7f8v0i1s95nhpf2vacsv01ooakdrn91d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5EtlmqtKeE4UQYKrYMXKjJ_eaRHQGXXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155041576784-7f8v0i1s95nhpf2vacsv01ooakdrn91d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
