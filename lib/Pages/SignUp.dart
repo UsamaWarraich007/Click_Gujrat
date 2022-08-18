@@ -1,10 +1,13 @@
 import 'package:click_gujrat/Pages/Login.dart';
 import 'package:click_gujrat/Widgets/loading_spinner.dart';
 import 'package:click_gujrat/Widgets/toaster.dart';
+import 'package:email_auth/email_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import '../Models/User.dart';
 import '../Services/AuthenticationService.dart';
+
 
 class MySignUp extends StatefulWidget {
   const MySignUp({Key? key}) : super(key: key);
@@ -19,14 +22,55 @@ class _MySignUpState extends State<MySignUp> {
 
   final nameFocus = FocusNode(),
       emailFocus = FocusNode(),
+      OTPFocus = FocusNode(),
       passwordFocus = FocusNode(),
       conformFocus = FocusNode();
   TextEditingController email = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController OTP = TextEditingController();
   TextEditingController confirm = TextEditingController();
   String _gender = '';
   int _role = 0;
+  //bool isverify=false;
+  late EmailAuth emailAuth;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailAuth = new EmailAuth(
+      sessionName: "Click Gujrat",
+    );
+
+    /// Configuring the remote server
+    //emailAuth.config(remoteServerConfiguration);
+  }
+  void sendOTP() async
+  {
+    bool result=await emailAuth.sendOtp(recipientMail: email.text);
+    if(result){
+      //Get.to(emailOTP(  userEmail: email.text,));
+      Toaster.showToast("check your mail and verify Otp.");
+    }
+    else{
+      print('sorry can not send email');
+    }
+  }
+  void verifyOTP(){
+    var result=emailAuth.validateOtp(recipientMail: email.text, userOtp: OTP.text);
+    if(result)
+    {
+      //Get.to(MySignUp());
+      //isverify=true;
+      print("true OTP");
+      Toaster.showToast("OTP Verifiec");
+    }
+    else
+    {
+      print('sorry invalid otp');
+      Toaster.showToast("Enter valid OTP");
+    }
+  }
 
   @override
   void dispose() {
@@ -68,6 +112,7 @@ class _MySignUpState extends State<MySignUp> {
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: username,
+                      maxLength: 30,
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
                       focusNode: nameFocus,
@@ -115,11 +160,18 @@ class _MySignUpState extends State<MySignUp> {
                         return null;
                       },
                       onFieldSubmitted: (name) =>
-                          Get.focusScope!.requestFocus(passwordFocus),
+                          Get.focusScope!.requestFocus(OTPFocus),
                       controller: email,
                       decoration: InputDecoration(
                           prefixIcon:
                               const Icon(Icons.mail, color: Color(0xfff1c40f)),
+                          // suffixIcon: TextButton(
+                          //   child: Text('Send OTP',
+                          //   style: TextStyle(color: Color(0xfff1c40f)),),
+                          //   onPressed: (){
+                          //     sendOTP();
+                          //   },
+                          // ),
                           fillColor: Colors.grey.shade100,
                           filled: true,
                           labelText: 'Email',
@@ -137,11 +189,55 @@ class _MySignUpState extends State<MySignUp> {
                   const SizedBox(
                     height: 10,
                   ),
+                  // Container(
+                  //   padding: const EdgeInsets.only(right: 35, left: 35),
+                  //   child: TextFormField(
+                  //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //     keyboardType: TextInputType.number,
+                  //     textInputAction: TextInputAction.next,
+                  //     focusNode: OTPFocus,
+                  //     validator: (OTP) {
+                  //       if (OTP == null || OTP.trim().isEmpty) {
+                  //         return "OTP can't be empty";
+                  //       }
+                  //       return null;
+                  //     },
+                  //     onFieldSubmitted: (name) =>
+                  //         Get.focusScope!.requestFocus(passwordFocus),
+                  //     controller: OTP,
+                  //     decoration: InputDecoration(
+                  //         prefixIcon:
+                  //         const Icon(Icons.password, color: Color(0xfff1c40f)),
+                  //         suffixIcon: TextButton(
+                  //           child: Text('Verify OTP',
+                  //             style: TextStyle(color: Color(0xfff1c40f)),),
+                  //           onPressed: (){
+                  //             verifyOTP();
+                  //           },
+                  //         ),
+                  //         fillColor: Colors.grey.shade100,
+                  //         filled: true,
+                  //         labelText: 'OTP',
+                  //         floatingLabelStyle:
+                  //         const TextStyle(color: Color(0xfff1c40f)),
+                  //         focusedBorder: const OutlineInputBorder(
+                  //           borderSide: BorderSide(
+                  //               color: Color(0xfff1c40f), width: 2.0),
+                  //         ),
+                  //         border: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(10),
+                  //         )),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   Container(
                     padding: const EdgeInsets.only(right: 35, left: 35),
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.visiblePassword,
+                      maxLength: 20,
                       textInputAction: TextInputAction.next,
                       focusNode: passwordFocus,
                       validator: (password) {
@@ -413,10 +509,16 @@ class _MySignUpState extends State<MySignUp> {
       Toaster.showToast("Please select account type.");
       return;
     }
+    // if(isverify==false)
+    //   {
+    //     Toaster.showToast("Plz verify Otp.");
+    //     return;
+    //   }
     // showDialog(context: context, builder: (context) => const LoadingSpinner(), barrierDismissible: false);
     Get.dialog(const LoadingSpinner(), barrierDismissible: false);
     UserModel? result = await _auth.signUp(
         username.text, email.text.trim(), password.text.trim(), _gender);
+    //isverify=false;
     Get.back();
     // Navigator.pop(context);
     if (result == null) {

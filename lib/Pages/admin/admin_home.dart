@@ -18,7 +18,6 @@ class AdminHomePage extends StatefulWidget {
 class _AdminHomePageState extends State<AdminHomePage> {
   late List<Widget> _pages;
   late Widget _home;
-  late Widget _setting;
   late Widget _discover;
   late Widget _profile;
   late int _currentIndex;
@@ -27,10 +26,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
   void initState() {
     super.initState();
     _home = const AdminHomeTab();
-    _discover = const AdminDiscover();
-    _setting=const MySettings();
+    _discover = const Discover();
     _profile= const MyProfile();
-    _pages = [_home, _discover, _setting, _profile];
+    _pages = [_home, _discover, _profile];
     _currentIndex = 0;
     _currentPage = _home;
   }
@@ -66,10 +64,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             label:'Discover',
             icon: Icon(Icons.compass_calibration),
           ),
-          BottomNavigationBarItem(
-            label: 'Setting',
-            icon: Icon(Icons.settings),
-          ),
+
           BottomNavigationBarItem(
             label: 'Profile',
             icon: Icon(Icons.person),

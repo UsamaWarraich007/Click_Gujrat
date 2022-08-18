@@ -9,6 +9,7 @@ import 'DatabaseServices.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+ // bool isEmailVerified=false;
 
   UserModel? _userFromFirebase(User? user) {
     if (user != null) {
@@ -24,7 +25,7 @@ class AuthService extends ChangeNotifier {
   Future<UserModel?> signIn(String email,String password) async {
     try{
       UserCredential userCredential=await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-        User? user=userCredential.user;
+      User? user=userCredential.user;
         await updateUserInfo("");
         return _userFromFirebase(user);
     } on FirebaseAuthException catch(e){
@@ -97,6 +98,9 @@ class AuthService extends ChangeNotifier {
     try {
       await _firebaseAuth.currentUser!.updateDisplayName(name);
       await _firebaseAuth.currentUser!.updatePhotoURL(image);
+      // print('all ok');
+      // await _firebaseAuth.currentUser!.updateEmail(email);
+      // print('email ok');
       return await DatabaseService(uid: getUser()!.uid).updateUserData(name, gender, image, Roles.roles);
     } on FirebaseAuthException catch (e) {
       Toaster.showToast(e.code);

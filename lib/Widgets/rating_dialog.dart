@@ -28,7 +28,7 @@ class MyRatingDialog extends StatelessWidget {
         style: TextStyle(fontSize: 15),
       ),
       // your app's logo?
-      image: const FlutterLogo(size: 100),
+      image:  Image.asset('assets/logo.jpg'),
       submitButtonText: 'Submit',
       commentHint: 'Write your comments here...',
       onCancelled: onCancel,

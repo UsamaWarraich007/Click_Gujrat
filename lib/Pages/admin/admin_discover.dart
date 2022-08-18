@@ -57,7 +57,7 @@ class _AdminDiscoverState extends State<AdminDiscover> {
                           return Center(child: BigText(text: "Places not found.", size: 20,),);
                         }
                         return SizedBox(
-                          height: 260,
+                          height: 270,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: value.length,
@@ -142,12 +142,8 @@ class _AdminDiscoverState extends State<AdminDiscover> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceAround,
                                               children: [
-                                                const IconAndText(
-                                                    icon: Icons.circle_sharp,
-                                                    text: "Normal",
-                                                    iconColor: AppColors.orange),
                                                 FutureBuilder<String>(future: place.getDistance(),builder: (context, snapshot) {
                                                   if (snapshot.hasData && snapshot.data != null) {
                                                     return IconAndText(
@@ -160,6 +156,7 @@ class _AdminDiscoverState extends State<AdminDiscover> {
                                                       text: "0Km",
                                                       iconColor: AppColors.green);
                                                 }),
+                                                SizedBox(width: 10,),
                                                 IconAndText(
                                                     icon: Icons.access_time_sharp,
                                                     text: place.remainingTime(),

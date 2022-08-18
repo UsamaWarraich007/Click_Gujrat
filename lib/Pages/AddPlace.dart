@@ -16,6 +16,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import '../Models/user_info_model.dart';
+import '../Services/fcm_notification.dart';
 import '../Widgets/image_picker_dialog.dart';
 import '../Widgets/loading_spinner.dart';
 import 'map/add_location.dart';
@@ -51,8 +53,8 @@ class _AddPlaceState extends State<AddPlace> {
     "Hostels",
     "Universities",
     "Colleges",
+    "Schools",
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,6 +177,7 @@ class _AddPlaceState extends State<AddPlace> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: nameController,
                   focusNode: nameFocus,
+                  maxLength: 30,
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   validator: (text) {
@@ -335,12 +338,9 @@ class _AddPlaceState extends State<AddPlace> {
                 ),
                 InkWell(
                   onTap: () async {
-                    var result = await Navigator.push<LatLng?>(
-                        context,
-                        MaterialPageRoute<LatLng?>(
+                    var result = await Navigator.push<LatLng?>(context, MaterialPageRoute<LatLng?>(
                             builder: (_) => const AddLocation()));
                     if (result != null) {
-                      print("Result::: $result");
                       List<Placemark> placeMarks =
                           await placemarkFromCoordinates(
                               result.latitude, result.longitude);
@@ -443,10 +443,32 @@ class _AddPlaceState extends State<AddPlace> {
                           primary: AppColors.buttonColor,
                         ),
                         onPressed: () async {
-                          var images = await imagePicker.pickMultiImage();
-                          if (images != null) {
-                            addFiles(images);
-                          }
+                          List<XFile>? images = await imagePicker.pickMultiImage();
+                          // print(images?.length);
+                          // print(imagesPath.length);
+                          // if (images != null) {
+                          //  if(images.length>2||imagesPath.length>2){
+                          //     Get.defaultDialog(
+                          //         title: "Pic limitation",
+                          //         middleText: "Plz select images less then or equal to Ten ",
+                          //         //titleStyle: TextStyle(color: Colors.white),
+                          //         //middleTextStyle: TextStyle(color: Colors.white),
+                          //         textConfirm: "Ok",
+                          //         onConfirm: Get.back,
+                          //       //  textCancel: "Cancel",
+                          //         //cancelTextColor: Colors.white,
+                          //         //confirmTextColor: Colors.white,
+                          //         //buttonColor: Colors.red,
+                          //         //barrierDismissible: false,
+                          //       //  radius: 50,
+                          //     );
+                          //   }
+                          //   else {
+                              addFiles(images);
+                             //}
+
+                            // images.clear();
+                          //}
                         },
                         child: const Text(
                           'Add files',
@@ -537,6 +559,7 @@ class _AddPlaceState extends State<AddPlace> {
         close: closingTime,
         date: DateFormat().format(DateTime.now()),
         homeImage: _imagePath,
+        //userlist: widget.place?.userlist ?? [],
         images: imagesPath,
         isApproved: widget.place!.isApproved,
         openTime: openingTime,
@@ -555,6 +578,7 @@ class _AddPlaceState extends State<AddPlace> {
         category: _category!,
         close: closingTime,
         likes: 0,
+        //userlist: [],
         commentsCount: 0,
         date: DateFormat().format(DateTime.now()),
         homeImage: _imagePath,
@@ -564,6 +588,13 @@ class _AddPlaceState extends State<AddPlace> {
         token: "",
       );
       await context.read<LocationServices>().addPlace(place);
+      var _userInfo = await AuthService().getAData(3);
+        for (UserInfo user in _userInfo) {
+          await FCMNotificationService().sendNotificationToUser(
+              fcmToken: user.token,
+              title: "Click Gujrat",
+              body: "New place added, please check and approve it");
+        }
     }
     Navigator.pop(context);
   }

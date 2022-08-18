@@ -24,6 +24,7 @@ class _OwnerMainHomeState extends State<OwnerMainHome> {
   late Widget _setting;
   late int _currentIndex;
   late Widget _currentPage;
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +59,7 @@ class _OwnerMainHomeState extends State<OwnerMainHome> {
           //  print(value);
           _changeTab(value);
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             label: 'home',
             icon: Icon(Icons.home),

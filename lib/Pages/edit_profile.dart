@@ -29,25 +29,24 @@ class _EditProfileState extends State<EditProfile> {
   String _imagePath = "";
 
   final nameFocus = FocusNode(),
-      emailFocus = FocusNode(),
-      passwordFocus = FocusNode(),
-      newPasswordFocus = FocusNode(),
-      confirmFocus = FocusNode();
+      emailFocus = FocusNode();
+     // passwordFocus = FocusNode(),
+    //  newPasswordFocus = FocusNode(),
+     // confirmFocus = FocusNode();
   TextEditingController email = TextEditingController();
   TextEditingController username = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _repeatPasswordController =
-      TextEditingController();
+ // final TextEditingController _passwordController = TextEditingController();
+ // final TextEditingController _newPasswordController = TextEditingController();
+ // final TextEditingController _repeatPasswordController =TextEditingController();
   String _gender = '';
 
   @override
   void dispose() {
     email.dispose();
     username.dispose();
-    _passwordController.dispose();
-    _newPasswordController.dispose();
-    _repeatPasswordController.dispose();
+   // _passwordController.dispose();
+   // _newPasswordController.dispose();
+   // _repeatPasswordController.dispose();
     super.dispose();
   }
 
@@ -89,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: Dimensions.height5,
+                        height: 50,
                       ),
                       SizedBox(
                         height: 200,
@@ -164,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       SizedBox(
-                        height: Dimensions.height30,
+                        height: 60,
                       ),
                       Container(
                         padding: const EdgeInsets.only(right: 35, left: 35),
@@ -200,124 +199,160 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(right: 35, left: 35),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (name) => Get.focusScope!.requestFocus(newPasswordFocus),
-                          controller: _passwordController,
-                          obscureText: true,
-                          validator: (password) {
-                            if (password == null || password.isEmpty) {
-                              return "Enter your current password";
-                            } else if (password.trim().length < 6) {
-                              return "password must be 6 characters or greater then 6";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.lock,
-                                  color: Color(0xfff1c40f)),
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              labelText: 'Current Password',
-                              floatingLabelStyle:
-                                  const TextStyle(color: Color(0xfff1c40f)),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xfff1c40f), width: 2.0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                        ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.only(right: 35, left: 35),
+                      //   child: TextFormField(
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     controller: email,
+                      //     keyboardType: TextInputType.emailAddress,
+                      //     textInputAction: TextInputAction.next,
+                      //     focusNode: emailFocus,
+                      //     validator: (email) {
+                      //       if (email == null || email.trim().isEmpty) {
+                      //         return "email can't be empty";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     onFieldSubmitted: (name) =>
+                      //         Get.focusScope!.requestFocus(emailFocus),
+                      //     decoration: InputDecoration(
+                      //         prefixIcon: const Icon(Icons.email,
+                      //             color: Color(0xfff1c40f)),
+                      //         fillColor: Colors.grey.shade100,
+                      //         filled: true,
+                      //         labelText: 'Email',
+                      //         floatingLabelStyle:
+                      //         const TextStyle(color: Color(0xfff1c40f)),
+                      //         focusedBorder: const OutlineInputBorder(
+                      //           borderSide: BorderSide(
+                      //               color: Color(0xfff1c40f), width: 2.0),
+                      //         ),
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         )),
+                      //   ),
+                      // ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(right: 35, left: 35),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.done,
-                          focusNode: newPasswordFocus,
-                          controller: _newPasswordController,
-                          validator: (newPassword) {
-                            if (newPassword == null || newPassword.isEmpty) {
-                              return "Enter your new password";
-                            } else if (newPassword.trim().length < 6) {
-                              return "password must be 6 characters or greater then 6";
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (name) => Get.focusScope!.unfocus(),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.lock,
-                                  color: Color(0xfff1c40f)),
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              labelText: 'New Password',
-                              floatingLabelStyle:
-                                  const TextStyle(color: Color(0xfff1c40f)),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xfff1c40f), width: 2.0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(right: 35, left: 35),
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.done,
-                          focusNode: confirmFocus,
-                          controller: _repeatPasswordController,
-                          validator: (confirm) {
-                            if (confirm == null || confirm.isEmpty) {
-                              return "Please confirm your password";
-                            } else if (confirm.trim().length < 6) {
-                              return "password must be 6 characters or greater then 6";
-                            }
-                            if (confirm != _newPasswordController.text) {
-                              return "Password not matched";
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (name) => Get.focusScope!.unfocus(),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.lock,
-                                  color: Color(0xfff1c40f)),
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              labelText: 'Confirm Password',
-                              floatingLabelStyle:
-                                  const TextStyle(color: Color(0xfff1c40f)),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xfff1c40f), width: 2.0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.only(right: 35, left: 35),
+                      //   child: TextFormField(
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     keyboardType: TextInputType.visiblePassword,
+                      //     textInputAction: TextInputAction.next,
+                      //     onFieldSubmitted: (name) => Get.focusScope!.requestFocus(newPasswordFocus),
+                      //     controller: _passwordController,
+                      //     obscureText: true,
+                      //     validator: (password) {
+                      //       if (password == null || password.isEmpty) {
+                      //         return "Enter your current password";
+                      //       } else if (password.trim().length < 6) {
+                      //         return "password must be 6 characters or greater then 6";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     decoration: InputDecoration(
+                      //         prefixIcon: const Icon(Icons.lock,
+                      //             color: Color(0xfff1c40f)),
+                      //         fillColor: Colors.grey.shade100,
+                      //         filled: true,
+                      //         labelText: 'Current Password',
+                      //         floatingLabelStyle:
+                      //             const TextStyle(color: Color(0xfff1c40f)),
+                      //         focusedBorder: const OutlineInputBorder(
+                      //           borderSide: BorderSide(
+                      //               color: Color(0xfff1c40f), width: 2.0),
+                      //         ),
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         )),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.only(right: 35, left: 35),
+                      //   child: TextFormField(
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     keyboardType: TextInputType.visiblePassword,
+                      //     textInputAction: TextInputAction.done,
+                      //     focusNode: newPasswordFocus,
+                      //     controller: _newPasswordController,
+                      //     validator: (newPassword) {
+                      //       if (newPassword == null || newPassword.isEmpty) {
+                      //         return "Enter your new password";
+                      //       } else if (newPassword.trim().length < 6) {
+                      //         return "password must be 6 characters or greater then 6";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     onFieldSubmitted: (name) => Get.focusScope!.unfocus(),
+                      //     obscureText: true,
+                      //     decoration: InputDecoration(
+                      //         prefixIcon: const Icon(Icons.lock,
+                      //             color: Color(0xfff1c40f)),
+                      //         fillColor: Colors.grey.shade100,
+                      //         filled: true,
+                      //         labelText: 'New Password',
+                      //         floatingLabelStyle:
+                      //             const TextStyle(color: Color(0xfff1c40f)),
+                      //         focusedBorder: const OutlineInputBorder(
+                      //           borderSide: BorderSide(
+                      //               color: Color(0xfff1c40f), width: 2.0),
+                      //         ),
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         )),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.only(right: 35, left: 35),
+                      //   child: TextFormField(
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     keyboardType: TextInputType.visiblePassword,
+                      //     textInputAction: TextInputAction.done,
+                      //     focusNode: confirmFocus,
+                      //     controller: _repeatPasswordController,
+                      //     validator: (confirm) {
+                      //       if (confirm == null || confirm.isEmpty) {
+                      //         return "Please confirm your password";
+                      //       } else if (confirm.trim().length < 6) {
+                      //         return "password must be 6 characters or greater then 6";
+                      //       }
+                      //       if (confirm != _newPasswordController.text) {
+                      //         return "Password not matched";
+                      //       }
+                      //       return null;
+                      //     },
+                      //     onFieldSubmitted: (name) => Get.focusScope!.unfocus(),
+                      //     obscureText: true,
+                      //     decoration: InputDecoration(
+                      //         prefixIcon: const Icon(Icons.lock,
+                      //             color: Color(0xfff1c40f)),
+                      //         fillColor: Colors.grey.shade100,
+                      //         filled: true,
+                      //         labelText: 'Confirm Password',
+                      //         floatingLabelStyle:
+                      //             const TextStyle(color: Color(0xfff1c40f)),
+                      //         focusedBorder: const OutlineInputBorder(
+                      //           borderSide: BorderSide(
+                      //               color: Color(0xfff1c40f), width: 2.0),
+                      //         ),
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         )),
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
                       Container(
                         padding: const EdgeInsets.only(right: 35, left: 35),
                         child: Row(
@@ -464,17 +499,17 @@ class _EditProfileState extends State<EditProfile> {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
     Get.focusScope!.unfocus();
-    if (!await validateCurrentPassword(_passwordController.text)) {
-      Toaster.showToast("Current password not valid, please check it and try again.");
-      return;
-    }
+    // if (!await validateCurrentPassword(_passwordController.text)) {
+    //   Toaster.showToast("Current password not valid, please check it and try again.");
+    //   return;
+    // }
 
     if (_gender.isEmpty) {
       Toaster.showToast("Please select gender.");
       return;
     }
     Get.dialog(const LoadingSpinner(), barrierDismissible: false);
-    await AuthService().updatePassword(_newPasswordController.text);
+   // await AuthService().updatePassword(_newPasswordController.text);
     var result = await AuthService().updateProfile(username.text, _gender, _imagePath);
     Get.back();
     print(result);

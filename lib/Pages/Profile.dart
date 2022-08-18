@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../Models/User.dart';
 import '../Services/upload_file.dart';
 import '../Widgets/image_picker_dialog.dart';
+import 'edit_profile.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -23,11 +24,16 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   final imagePicker = ImagePicker();
-
+  bool isvisible=false;
   File? _file;
-
   String _imagePath = "";
-
+@override
+  void initState() {
+    if(Roles.roles==3){
+      isvisible=true;
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User?>(context);
@@ -36,6 +42,19 @@ class _MyProfileState extends State<MyProfile> {
         backgroundColor: AppColors.buttonColor,
         title: const Text('Profile'),
         centerTitle: true,
+        actions: [
+            Visibility(
+              visible: isvisible,
+              child: InkWell(
+                onTap: (){
+                  Get.to(() => const EditProfile());
+                },
+                child: Icon(Icons.edit),
+              ),
+            ),
+          const SizedBox(width: 10,),
+
+        ],
       ),
       body: StreamBuilder<info.UserInfo>(
         stream: AuthService().streamUserInfo(),
@@ -181,9 +200,14 @@ class _MyProfileState extends State<MyProfile> {
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: Row(
                     //  crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
+                    children: [
+                      snapshot.data!.gender=="Male"?
                       Icon(
-                        Icons.location_on,
+                        Icons.male,
+                        color: Colors.orangeAccent,
+                        size: 40,
+                      ):Icon(
+                        Icons.female,
                         color: Colors.orangeAccent,
                         size: 40,
                       ),
@@ -191,7 +215,7 @@ class _MyProfileState extends State<MyProfile> {
                         width: 10,
                       ),
                       Text(
-                        'Gujrat',
+                        snapshot.data!.gender,
                         style: TextStyle(
                           fontSize: 20,
                         ),

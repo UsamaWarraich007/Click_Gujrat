@@ -116,7 +116,7 @@ class _AddLocationState extends State<AddLocation> {
               mapType: MapType.normal,
               compassEnabled: false,
               zoomGesturesEnabled: true,
-              zoomControlsEnabled: false,
+              zoomControlsEnabled: true,
               myLocationButtonEnabled: false,
 
               initialCameraPosition: _kGooglePlex,

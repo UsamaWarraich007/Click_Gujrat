@@ -95,58 +95,58 @@ class _MySettingsState extends State<MySettings> {
             ),
           ),
           const SizedBox(height: 20,),
-          Row(
-            children: const [
-              SizedBox(width: 20,),
-              Text('Notification', style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
-              ),),
-            ],
-          ),
-          const SizedBox(height: 10,),
-          if (Roles.roles == 1)
-          Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('New Place Added', style: TextStyle(
-                  fontSize: 26,
-                ),),
-                Obx(() => Switch(
-                  onChanged: toggleNotification,
-                  value: notification.value,
-                  activeColor: Colors.blue,
-                  activeTrackColor: Colors.yellow,
-                  inactiveThumbColor: Colors.redAccent,
-                  inactiveTrackColor: Colors.orange,
-                )),
-              ],
-            ),
-          ),
-          if (Roles.roles == 2)
-          Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                const Text('Likes My Comment', style: TextStyle(
-                  fontSize: 26,
-                ),),
-
-                Obx(() => Switch(
-                  onChanged: toggleSwitch,
-                  value: isSwitched.value,
-                  activeColor: Colors.blue,
-                  activeTrackColor: Colors.yellow,
-                  inactiveThumbColor: Colors.redAccent,
-                  inactiveTrackColor: Colors.orange,
-                )),
-              ],
-            ),
-          ),
+          // Row(
+          //   children: const [
+          //     SizedBox(width: 20,),
+          //     Text('Notification', style: TextStyle(
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 26,
+          //     ),),
+          //   ],
+          // ),
+          // const SizedBox(height: 10,),
+          // if (Roles.roles == 1)
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 17),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text('New Place Added', style: TextStyle(
+          //         fontSize: 26,
+          //       ),),
+          //       Obx(() => Switch(
+          //         onChanged: toggleNotification,
+          //         value: notification.value,
+          //         activeColor: Colors.blue,
+          //         activeTrackColor: Colors.yellow,
+          //         inactiveThumbColor: Colors.redAccent,
+          //         inactiveTrackColor: Colors.orange,
+          //       )),
+          //     ],
+          //   ),
+          // ),
+          // if (Roles.roles == 2)
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 17),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //
+          //       const Text('Likes My Comment', style: TextStyle(
+          //         fontSize: 26,
+          //       ),),
+          //
+          //       Obx(() => Switch(
+          //         onChanged: toggleSwitch,
+          //         value: isSwitched.value,
+          //         activeColor: Colors.blue,
+          //         activeTrackColor: Colors.yellow,
+          //         inactiveThumbColor: Colors.redAccent,
+          //         inactiveTrackColor: Colors.orange,
+          //       )),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(height: 20,),
           Row(
             children: const [

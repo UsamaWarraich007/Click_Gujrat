@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../Models/place_model.dart';
+import '../PlaceInfo/place_detail.dart';
 
 class MainPageBody extends StatefulWidget {
   const MainPageBody({Key? key}) : super(key: key);
@@ -23,8 +24,8 @@ class _MainPageBodyState extends State<MainPageBody> {
   PageController pageController = PageController(viewportFraction: 0.85);
   final RxList<Place> _places = RxList<Place>();
   var _crruPagevalue = 0.0;
-  double _scaleFactor = 0.8;
-  var _height = Dimensions.pageViewContainer;
+ // double _scaleFactor = 0.8;
+ // var _height = Dimensions.pageViewContainer;
 
   @override
   void initState() {
@@ -150,7 +151,7 @@ class _MainPageBodyState extends State<MainPageBody> {
           Container(
             margin: EdgeInsets.only(left: Dimensions.width30),
             child: Row(
-              children: [BigText(text: "Popular")],
+              children: [BigText(text: "Places")],
             ),
           ),
           //List Of places
@@ -168,92 +169,101 @@ class _MainPageBodyState extends State<MainPageBody> {
                         right: Dimensions.width20,
                         bottom: Dimensions.height10,
                       ),
-                      child: Row(
-                        children: [
-                          //image section
-                          Container(
-                            height: Dimensions.listViewImgSize,
-                            width: Dimensions.listViewImgSize,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.radius20),
-                                color: Colors.white38,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(place.homeImage),
-                                )),
-                          ),
-                          //text
-                          Expanded(
-                            child: Container(
-                              height: Dimensions.listViewConSize,
+                      child: InkWell(
+                        onTap: () async{
+                          await context
+                              .read<LocationServices>().updatePlace(place, place.id!);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PlaceDetail(id: place.id!)));
+                        },
+                        child: Row(
+                          children: [
+                            //image section
+                            Container(
+                              height: Dimensions.listViewImgSize,
+                              width: Dimensions.listViewImgSize,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight:
-                                  Radius.circular(Dimensions.radius20),
-                                  bottomRight:
-                                  Radius.circular(Dimensions.radius20),
-                                ),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: Dimensions.width10,
-                                    right: Dimensions.width10),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    BigText(text: place.title),
-                                    SizedBox(
-                                      height: Dimensions.width10,
-                                    ),
-                                    BigText(
-                                      text: place.description,
-                                      size: 15,
-                                      color: AppColors.textColor,
-                                    ),
-                                    SizedBox(
-                                      height: Dimensions.width10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        // const IconAndText(
-                                        //     icon: Icons.circle_sharp,
-                                        //     text: "Normal",
-                                        //     iconColor: AppColors.orange),
-                                        FutureBuilder<String>(
-                                            future: place.getDistance(),
-                                            builder: (context, snapshot) {
-                                              if (snapshot.hasData &&
-                                                  snapshot.data != null) {
-                                                return IconAndText(
-                                                    icon: Icons.location_on,
-                                                    text:
-                                                    "${snapshot.data}Km",
-                                                    iconColor:
-                                                    AppColors.green);
-                                              }
-                                              return const IconAndText(
-                                                  icon: Icons.location_on,
-                                                  text: "0Km",
-                                                  iconColor: AppColors.green);
-                                            }),
-                                        IconAndText(
-                                            icon: Icons.access_time_sharp,
-                                            text: place.remainingTime(),
-                                            iconColor: AppColors.yellow),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Colors.white38,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(place.homeImage),
+                                  )),
                             ),
-                          )
-                        ],
+                            //text
+                            Expanded(
+                              child: Container(
+                                height: Dimensions.listViewConSize,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight:
+                                    Radius.circular(Dimensions.radius20),
+                                    bottomRight:
+                                    Radius.circular(Dimensions.radius20),
+                                  ),
+                                  color: Colors.white,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: Dimensions.width10,
+                                      right: Dimensions.width10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      BigText(text: place.title),
+                                      SizedBox(
+                                        height: Dimensions.width10,
+                                      ),
+                                      BigText(
+                                        text: place.description,
+                                        size: 15,
+                                        color: AppColors.textColor,
+                                      ),
+                                      SizedBox(
+                                        height: Dimensions.width10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                        children: [
+                                          // const IconAndText(
+                                          //     icon: Icons.circle_sharp,
+                                          //     text: "Normal",
+                                          //     iconColor: AppColors.orange),
+                                          FutureBuilder<String>(
+                                              future: place.getDistance(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData &&
+                                                    snapshot.data != null) {
+                                                  return IconAndText(
+                                                      icon: Icons.location_on,
+                                                      text:
+                                                      "${snapshot.data}Km",
+                                                      iconColor:
+                                                      AppColors.green);
+                                                }
+                                                return const IconAndText(
+                                                    icon: Icons.location_on,
+                                                    text: "0Km",
+                                                    iconColor: AppColors.green);
+                                              }),
+                                          IconAndText(
+                                              icon: Icons.access_time_sharp,
+                                              text: place.remainingTime(),
+                                              iconColor: AppColors.yellow),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   })),
@@ -288,16 +298,23 @@ class _MainPageBodyState extends State<MainPageBody> {
 
     return Stack(
       children: [
-        Container(
-          height: Dimensions.pageViewContainer,
-          margin: const EdgeInsets.only(left: 10, right: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radius30),
-              color: AppColors.orange,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(place.homeImage),
-              )),
+        InkWell(
+          onTap: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaceDetail(id: place.id!)));
+          },
+          child: Container(
+            height: Dimensions.pageViewContainer,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dimensions.radius30),
+                color: AppColors.orange,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(place.homeImage),
+                )),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -365,7 +382,7 @@ class _MainPageBodyState extends State<MainPageBody> {
                     height: Dimensions.height20,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       FutureBuilder<String>(
                         future: place.getDistance(),

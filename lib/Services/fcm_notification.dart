@@ -9,7 +9,7 @@ abstract class FCMNotification {
 }
 
 class FCMNotificationService extends FCMNotification {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+ // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final String _endPoint = "https://fcm.googleapis.com/fcm/send";
   final String _contentType = "application/json";
   final String _authorization = "key=AAAAJBkyt1A:APA91bHC8dco9ZU5NKtS_Gp5V-y_SiCErInO4oWsw_4ZACgumV4PSldMo94imI6zKXGtfMk21hn4hghWCrbTh-tkArhlJ0OgSE3Md83rw3OJEaFU0b7oj3cFbNR0ROFqHo7vzUH9pkZo";

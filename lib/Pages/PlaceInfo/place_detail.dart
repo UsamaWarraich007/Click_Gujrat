@@ -25,16 +25,12 @@ class PlaceDetail extends StatefulWidget {
   final String id;
 
   const PlaceDetail({Key? key, required this.id}) : super(key: key);
-
   @override
   _PlaceDetailState createState() => _PlaceDetailState();
 }
 
 class _PlaceDetailState extends State<PlaceDetail> {
   final User _user = AuthService().getUser()!;
-  RxInt commentsCount = RxInt(0);
-  RxInt avg = RxInt(0);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,13 +139,8 @@ class _PlaceDetailState extends State<PlaceDetail> {
                               height: Dimensions.height20,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                BigText(
-                                  text: "Open",
-                                  size: 17,
-                                  color: AppColors.orange,
-                                ),
                                 InkWell(
                                   onTap: () => Get.dialog(
                                       LocationDialog(latLng: place.latLng!)),
@@ -276,7 +267,6 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, subIndex) {
-                                      print(Roles.roles);
                                       Message message = value.first.comment[subIndex];
                                       if (Roles.roles == 3) {
                                         return Badge(

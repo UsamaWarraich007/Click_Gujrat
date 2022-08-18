@@ -10,9 +10,10 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  final emailController = TextEditingController(),
+  final //emailController = TextEditingController(),
       messageController = TextEditingController(),
       subjectController = TextEditingController();
+  final String myemail="usamanawaz7722@gmail.com";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -34,36 +35,36 @@ class _ContactPageState extends State<ContactPage> {
           key: _formKey,
           child: ListView(
             children: [
-              Row(
-                children: const [
-                  Text(
-                    'Email',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                validator: (email) {
-                  if (GetUtils.isNullOrBlank(email)! ||
-                      !GetUtils.isEmail(email!)) {
-                    return "Email valid email";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              // Row(
+              //   children: const [
+              //     Text(
+              //       'Email',
+              //       style: TextStyle(
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: 24,
+              //       ),
+              //     )
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              // TextFormField(
+              //   autovalidateMode: AutovalidateMode.onUserInteraction,
+              //   controller: emailController,
+              //   keyboardType: TextInputType.emailAddress,
+              //   textInputAction: TextInputAction.next,
+              //   validator: (email) {
+              //     if (GetUtils.isNullOrBlank(email)! ||
+              //         !GetUtils.isEmail(email!)) {
+              //       return "Email valid email";
+              //     }
+              //     return null;
+              //   },
+              //   decoration: const InputDecoration(
+              //     border: OutlineInputBorder(),
+              //   ),
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -159,7 +160,7 @@ class _ContactPageState extends State<ContactPage> {
     final Email email = Email(
       body: messageController.text,
       subject: subjectController.text,
-      recipients: [emailController.text],
+      recipients: [myemail],
       isHTML: false,
     );
 

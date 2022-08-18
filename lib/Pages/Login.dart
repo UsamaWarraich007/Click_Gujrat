@@ -19,6 +19,7 @@ class MyLogin extends StatefulWidget {
 const color = Color(0xFFB74093);
 
 class _MyLoginState extends State<MyLogin> {
+  bool hidePassword = true;
   final AuthService _auth = AuthService();
   FocusNode emailNode = FocusNode(), passwordNode = FocusNode();
   bool _isLoading = false;
@@ -120,10 +121,20 @@ class _MyLoginState extends State<MyLogin> {
                           return null;
                         },
                         controller: password,
-                        obscureText: true,
+                        obscureText: hidePassword,
                         decoration: InputDecoration(
                             prefixIcon:
                             const Icon(Icons.lock, color: Color(0xfff1c40f)),
+                            suffixIcon: IconButton(
+                              icon: hidePassword
+                                  ? Icon(Icons.visibility_off,color: Color(0xfff1c40f))
+                                  : Icon(Icons.visibility,color: Color(0xfff1c40f)),
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                            ),
                             fillColor: Colors.grey.shade100,
                             filled: true,
                             labelText: 'password',

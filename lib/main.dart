@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,9 @@ import 'Services/app_services.dart';
 import 'routes/pages.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+ // WidgetsFlutterBinding.ensureInitialized();
   await AppServices().initServices();
   if (kReleaseMode) {
     Get.isLogEnable = false;
@@ -88,7 +91,26 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    initialization();
+  }
 
+  void initialization() async {
+    // This is where you can initialize the resources needed by your app while
+    // the splash screen is displayed.  Remove the following example because
+    // delaying the user experience is a bad design practice!
+    // ignore_for_file: avoid_print
+    // print('ready in 3...');
+    // await Future.delayed(const Duration(seconds: 1));
+    // print('ready in 2...');
+    // await Future.delayed(const Duration(seconds: 1));
+    // print('ready in 1...');
+    // await Future.delayed(const Duration(seconds: 1));
+    // print('go!');
+    FlutterNativeSplash.remove();
+  }
   @override
   Widget build(BuildContext context) {
 

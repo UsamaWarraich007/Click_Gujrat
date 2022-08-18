@@ -21,6 +21,7 @@ class Place {
   final String address;
   bool isApproved;
   String? id;
+  //final List<UserL?> userlist;
 
   Place({
     required this.category,
@@ -38,6 +39,7 @@ class Place {
     required this.uid,
     required this.token,
     required this.isApproved,
+    //required this.userlist,
   }) : id = "";
 
   Place.fromFirestore(
@@ -57,6 +59,7 @@ class Place {
         images = List<String>.from(snapshot["imageList"].map((x) => x)),
         address = snapshot["location"],
         isApproved = snapshot["isApproved"],
+      //  userlist = List<UserL>.from(snapshot["userList"].map((x) => UserL.fromMap(x))),
         homeImage = snapshot["homeImage"];
 
   Map<String, dynamic> toFirestore() {
@@ -74,6 +77,7 @@ class Place {
       "location": address,
       "homeImage": homeImage,
       "isApproved": isApproved,
+      //"userList" : List<dynamic>.from(userlist.map((e) => e!.toJson())),
       if (images != null) "imageList": List<dynamic>.from(images!.map((e) => e)),
       if (latLng != null) "latLng" : latLng!.toJson(),
     };
@@ -113,3 +117,16 @@ class Place {
 
 
 }
+// class UserL {
+//   final String uid;
+//   UserL({
+//     required this.uid,
+//   });
+//   factory UserL.fromMap(Map<String, dynamic> map) => UserL(
+//     uid: map["uid"],
+//   );
+//
+//   Map<dynamic, dynamic> toJson()=> {
+//     "uid" : uid,
+//   };
+// }

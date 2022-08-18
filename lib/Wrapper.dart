@@ -5,6 +5,7 @@ import 'package:click_gujrat/Pages/OwnerMainHome.dart';
 import 'package:click_gujrat/Pages/admin/admin_home.dart';
 import 'package:click_gujrat/Services/AuthenticationService.dart';
 
+
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -32,8 +33,21 @@ class _WrapperState extends State<Wrapper> {
             return const OwnerMainHome();
           } else if (snapshot.data == 3){
             return const AdminHomePage();
-          } else {
+          } else if (snapshot.data == 2){
             return const MainHome();
+          }else {
+            return Scaffold(
+              body: Center(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    strokeWidth: 6.0,
+                  ),
+                  SizedBox(height: 10,),
+                  Text('Loading...')
+                ],
+              )),
+            );
           }
         },
       );

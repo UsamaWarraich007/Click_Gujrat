@@ -79,19 +79,12 @@ class PushNotificationsManager extends GetxService {
   void alertOnNotification({required String title, required String description}) {
     Get.defaultDialog(
       title: title,
-      textCancel: 'DISMISS',
-      textConfirm: 'VIEW',
-      onCancel: Get.back,
+     // textCancel: 'DISMISS',
+      textConfirm: 'Ok',
+      //onCancel: Get.back,
       middleText: description,
       onConfirm: Get.back,
     );
   }
 
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    // If you're going to use other Firebase services in the background, such as Firestore,
-    // make sure you call `initializeApp` before using other Firebase services.
-    await Firebase.initializeApp();
-
-    print("Handling a background message: ${message.messageId}");
-  }
 }
